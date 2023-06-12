@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { GET_GENRES, OPTIONS_GET } from "../api/api.constants";
 import { IGenre } from "../models";
 
-interface MovieProps {
+export interface MovieItemProps {
    title: string;
    imageUrl: string;
    genreId: number[];
+   genresArr: IGenre[];
    avarageVote: number;
 }
 
@@ -13,21 +13,14 @@ export default function MovieItem({
    title,
    imageUrl,
    genreId,
+   genresArr,
    avarageVote,
-}: MovieProps) {
+}: MovieItemProps) {
    const [genre, setGenre] = useState<IGenre[]>([]);
 
    useEffect(() => {
-      fetchGenres().then((g: IGenre[]) => {
-         setGenre(g);
-      });
-   }, []);
-
-   async function fetchGenres(): Promise<IGenre[]> {
-      const response = await fetch(GET_GENRES, OPTIONS_GET);
-      const genres: IGenre[] = (await response.json())?.genres;
-      return genres;
-   }
+      setGenre(genresArr);
+   }, [genresArr]);
 
    return (
       <div
@@ -62,7 +55,12 @@ export default function MovieItem({
                      return (
                         <h5
                            key={key++}
-                           className="bg-white text-black border-2 p-1 text-xs font-bold rounded-md"
+                           className="text-xs font-bold rounded-md p-1"
+                           style={{
+                              background:
+                                 genre.find((g) => g.id === elem)?.color + "25",
+                              color: genre.find((g) => g.id === elem)?.color,
+                           }}
                         >
                            {genre.find((g) => g.id === elem)?.name}
                         </h5>

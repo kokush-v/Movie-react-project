@@ -1,54 +1,42 @@
-import { useEffect, useState } from "react";
-import { IMovieItem } from "../models";
+import { useContext, useEffect, useState } from "react";
+import { IGenre, IMovieItem, MovieRes } from "../models";
 import List from "./List";
 import MovieItem from "./MovieItem";
-import { GET_MOVIES, OPTIONS_GET } from "../api/api.constants";
+import {
+   fetchMovies,
+   fetchMoreMovies,
+   fetchMoviesWithFilters,
+} from "../api/api.functions";
+import { GenreContextType, GenreContext } from "../context/context";
 
-interface MovieRes {
-   page: number;
-   results: IMovieItem[];
-   total_pages: number;
-   total_results: number;
+interface MoiveListProps {
+   genreProps: IGenre[];
 }
 
-export function MoiveList() {
+export default function MoiveList({ genreProps }: MoiveListProps) {
    const [movieItems, setMovieItems] = useState<IMovieItem[]>([]);
    const [page, setPage] = useState<number>(0);
-   const [loading, setLoading] = useState<boolean>(false);
+   const [loading, setLoading] = useState<boolean>(true);
+   const context: GenreContextType | any = useContext(GenreContext);
+   const { selectedGenres }: GenreContextType = context;
 
    useEffect(() => {
-      fetchMovies()
+      fetchMoviesWithFilters(selectedGenres, setLoading)
+         .then((movie: MovieRes) => {
+            setMovieItems(movie.results);
+         })
+         .then(() => setLoading(false));
+   }, [selectedGenres]);
+
+   useEffect(() => {
+      fetchMovies(setLoading)
          .then((movie: MovieRes) => {
             setMovieItems(movie.results);
             if (movie.page < movie.total_pages) setPage(movie.page + 1);
             else setPage(-1);
          })
          .then(() => setLoading(false));
-
-      return;
    }, []);
-
-   async function fetchMovies(): Promise<MovieRes> {
-      setLoading(true);
-
-      const response = await fetch(GET_MOVIES, OPTIONS_GET);
-
-      const movieData: MovieRes = await response.json();
-
-      return movieData;
-   }
-
-   async function fetchMoreMovies(): Promise<MovieRes> {
-      setLoading(true);
-      const response = await fetch(
-         GET_MOVIES.replace("&page=1&", `&page=${page}&`),
-         OPTIONS_GET
-      );
-
-      const movieData: MovieRes = await response.json();
-
-      return movieData;
-   }
 
    return (
       <div className="p-1 flex flex-col items-center">
@@ -65,6 +53,7 @@ export function MoiveList() {
                   title={title}
                   imageUrl={backdrop_path}
                   genreId={genre_ids}
+                  genresArr={genreProps}
                   avarageVote={vote_average}
                   key={id}
                />
@@ -119,7 +108,8 @@ export function MoiveList() {
                   className="w-1/3 cursor-pointer mt-10 py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                   value="Показати більше..."
                   onClick={(e) => {
-                     fetchMoreMovies()
+                     setLoading(true);
+                     fetchMoreMovies(page, setLoading, selectedGenres)
                         .then((movie: MovieRes) => {
                            setMovieItems([...movieItems, ...movie.results]);
                            if (movie.page < movie.total_pages)

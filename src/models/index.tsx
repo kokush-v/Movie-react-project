@@ -18,4 +18,12 @@ export interface IMovieItem {
 export interface IGenre {
    id: number;
    name: string;
+   color: string;
+}
+
+export interface MovieRes {
+   page: number;
+   results: IMovieItem[];
+   total_pages: number;
+   total_results: number;
 }

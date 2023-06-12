@@ -2,7 +2,7 @@ export const OPTIONS_GET = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNDdlYjE2MzUyZTIzZDU4OTIwYWIzYzU4MThjODlhZCIsInN1YiI6IjY0ODRiMDc5YmYzMWYyNTA1NjliNzY0ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.w1-vvMMDOvUm3064gHcRhUT5mEdK0RywyoqTggCF5uM'
+      Authorization: 'Bearer ' + process.env.REACT_APP_API_TOKEN
     }
   }
 export const GET_GENRES ='https://api.themoviedb.org/3/genre/movie/list?language=uk'
