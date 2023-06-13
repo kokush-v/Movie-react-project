@@ -7,5 +7,5 @@ export const OPTIONS_GET = {
   }
 export const GET_GENRES ='https://api.themoviedb.org/3/genre/movie/list?language=uk'
 export const GET_MOVIES = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=uk&page=1&sort_by=popularity.desc"
-
+export const GET_RECOMEND = "https://api.themoviedb.org/3/trending/movie/day?language=uk"
 

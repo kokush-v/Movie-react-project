@@ -1,5 +1,5 @@
 import { IGenre, MovieRes } from '../models';
-import { GET_GENRES, OPTIONS_GET, GET_MOVIES } from './api.constants';
+import { GET_GENRES, OPTIONS_GET, GET_MOVIES, GET_RECOMEND } from './api.constants';
 
 export async function fetchGenres(): Promise<IGenre[]> {
     const response = await fetch(GET_GENRES, OPTIONS_GET);
@@ -33,4 +33,11 @@ export async function fetchMovies(setLoading: React.Dispatch<React.SetStateActio
    const movieData: MovieRes = await response.json();
 
    return movieData;
+ }
+
+ export async function fetchMovieRecomendation(): Promise<MovieRes> {
+   const response = await fetch(GET_RECOMEND, OPTIONS_GET);
+   const movieData: MovieRes = await response.json();
+
+   return movieData
  }

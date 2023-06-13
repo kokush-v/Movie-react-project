@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import MovieHeader from "./componets/MovieHeader";
 import { IGenre } from "./models";
-import { fetchGenres, fetchMoviesWithFilters } from "./api/api.functions";
+import { fetchGenres } from "./api/api.functions";
 import MoiveList from "./componets/MovieList";
 import { GenreContext, GenreContextType } from "./context/context";
+import MovieRecomdation from "./componets/MovieRecomendation";
 
 function App() {
    const [genre, setGenre] = useState<IGenre[]>([]);
@@ -49,6 +50,7 @@ function App() {
                }}
             >
                <MovieHeader genreProps={genre} />
+               <MovieRecomdation genreProps={genre} />
                <MoiveList genreProps={genre} />
             </div>
          </div>{" "}

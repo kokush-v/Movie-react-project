@@ -39,19 +39,19 @@ export default function MoiveList({ genreProps }: MoiveListProps) {
    }, []);
 
    return (
-      <div className="p-1 flex flex-col items-center">
+      <div className="p-1 flex flex-col items-center z-20">
          <List
             items={movieItems}
             renderItem={({
                title,
-               backdrop_path,
+               poster_path,
                genre_ids,
                vote_average,
                id,
             }: IMovieItem) => (
                <MovieItem
                   title={title}
-                  imageUrl={backdrop_path}
+                  imageUrl={poster_path}
                   genreId={genre_ids}
                   genresArr={genreProps}
                   avarageVote={vote_average}
@@ -67,7 +67,7 @@ export default function MoiveList({ genreProps }: MoiveListProps) {
                x="0px"
                y="0px"
                viewBox="0 0 100 100"
-               enable-background="new 0 0 0 0"
+               enableBackground="new 0 0 0 0"
                className="w-20 h-20"
             >
                <circle fill="#fff" stroke="none" cx="6" cy="50" r="6">

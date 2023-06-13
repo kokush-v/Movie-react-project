@@ -80,7 +80,7 @@ export default function MovieHeader({ genreProps }: MovieHeaderProps) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="white"
-            className="w-10 h-10 cursor-pointer z-30"
+            className="w-10 h-10 cursor-pointer z-50"
             onClick={() => {
                toggleModal();
             }}
@@ -93,7 +93,7 @@ export default function MovieHeader({ genreProps }: MovieHeaderProps) {
          </svg>
          {showModal && (
             <div
-               className="modal absolute w-2/6 h-auto flex flex-row justify-center flex-wrap gap-3 p-5 z-20 top-24 right-60 rounded-xl"
+               className="modal absolute w-2/6 h-auto flex flex-row justify-center flex-wrap gap-3 p-5 z-40 top-24 right-60 rounded-xl"
                style={{
                   boxShadow: "0px 0px 91px 30px rgba(20,20,20,1)",
                   background: "#141414",
